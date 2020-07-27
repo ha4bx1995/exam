@@ -1,0 +1,76 @@
+{
+	"status": 0,
+	"msg": "ok",
+	"data": [{
+			"id": 1,
+			"name": "个人中心",
+			"icon": "&#xe6b8;",
+			"url": "",
+			"children": [{
+				"id": 2,
+				"name": "收藏夹",
+				"icon": "",
+				"url": "../templates/member/list.html"
+			}, {
+				"id": 3,
+				"name": "个人信息",
+				"icon": "",
+				"url": "../templates/member/del.html"
+			}]
+		},
+		{
+			"id": 8,
+			"name": "专业查询学校",
+			"icon": "&#xe705;",
+			"url": "",
+			"children": [{
+				"id": 9,
+				"name": "根据专业查询学校",
+				"icon": "",
+				"url": "../templates/article/list.html"
+			}]
+		},
+		{
+			"id": 11,
+			"name": "信息查询",
+			"icon": "&#xe723;",
+			"url": "",
+			"children": [{
+				"id": 12,
+				"name": "学校信息查询",
+				"icon": "",
+				"url": "../templates/order/list.html"
+			},{
+				"id": 121,
+				"name": "学校推荐",
+				"icon": "",
+				"url": "../templates/order/del.html"
+			}]
+		},
+		{
+			"id": 13,
+			"name": "学校查专业",
+			"icon": "&#xe726;",
+			"url": "",
+			"children": [{
+				"id": 14,
+				"name": "根据学校查询专业信息",
+				"icon": "",
+				"url": "../templates/admin/list.html"
+			}]
+		},
+		{
+			"id": 18,
+			"name": "院校近三年信息",
+			"icon": "&#xe6ce;",
+			"url": "",
+			"children": [{
+				"id": 19,
+				"name": "院校近三年信息",
+				"icon": "",
+				"url": "../templates/echarts/echarts1.html"
+			}
+			]
+		}
+	]
+}

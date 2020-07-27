@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>会员资料编辑-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../static/css/font.css">
+		<link rel="stylesheet" href="../../static/css/weadmin.css">
+
+		<!--<meta name="renderer" content="webkit|ie-comp|ie-stand">-->
+		<!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
+		<!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">-->
+		<!--<meta http-equiv="Cache-Control" content="no-siteapp" />-->
+		<!--<link rel="stylesheet" href="../../static/css/font.css">-->
+		<!--<link rel="stylesheet" href="../../static/css/weadmin.css">-->
+		<link rel="stylesheet" href="../../lib/othersCss/toastr.css">
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+	</head>
+
+	<body>
+	<div class="weadmin-body">
+		<input type="hidden" id="dataId" name="phone" required="" lay-verify="phone"
+			   autocomplete="off" class="layui-input">
+		<blockquote class="layui-elem-quote">
+			特别声明：以下各项数据是对每个高校近三年的分数信息、报考人数、招生人数、录取人数信息的基本汇总，仅供参考，具体信息建议挪步至学校官网查看。 <a id="uniWebsite" href="#" style="color:red"></a>
+		</blockquote>
+		<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+		<div id="main" style="width: 100%;height:400px;"></div>
+		<blockquote class="layui-elem-quote">
+		</blockquote>
+	</div>
+
+
+		<script src="//cdn.bootcss.com/echarts/4.0.2/echarts.min.js"></script>
+		<script src="../../lib/layui/jquery-3.1.1.min.js"></script>
+		<script src="../../lib/othersJs/toastr.js"></script>
+		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript">
+
+            toastr.options = {
+                closeButton: false,
+                debug: false,
+                progressBar: true,
+                positionClass: "toast-top-center",
+                onclick: null,
+                showDuration: "300",
+                hideDuration: "1000",
+                timeOut: "2000",
+                extendedTimeOut: "1000",
+                showEasing: "swing",
+                hideEasing: "linear",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut"
+            };
+
+            layui.extend({
+                admin: '{/}../../static/js/admin'
+            });
+
+            layui.use(['laydate','jquery','admin','form','table','laypage'], function() {
+                var laydate = layui.laydate,
+                    $ = layui.jquery,
+                    form = layui.form,
+                    table = layui.table,
+                    laypage = layui.laypage,
+                    admin = layui.admin;
+
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+
+            var scoreMap = {};
+            var applyMap = {};
+            var enrollmentMap = {};
+            var admissionMap = {};
+            var option = {};
+            var university = null;
+            //给连接绑定个事件
+            $("#uniWebsite").on("click",function () {
+                window.open(university.exUniWebsite);
+            });
+            $(function () {
+                var exUniCode = $("#dataId").val();
+                var token = localStorage.getItem("token");
+                $.post("http://localhost:8080/getUniThreeYearMsg?token="+token,{exUniCode:exUniCode},function (res) {
+                    if(res.code == "0000"){
+                        scoreMap = res.scoreMap;
+                        applyMap = res.applyMap;
+                        enrollmentMap = res.enrollmentMap;
+                        admissionMap = res.admissionMap;
+                        university = res.uniMsg;
+                        //动态处理学校官网超链接 以及名称
+                        // $("#uniWebsite").attr("href",res.uniMsg.exUniWebsite);
+                        $("#uniWebsite").text(res.uniMsg.exUniName);
+
+                        // 指定图表的配置项和数据
+                        myChart.setOption(option = {
+                            title: {
+                                text: '近三年信息折叠图'
+                            },
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            legend: {
+                                data:['近三年分数信息','近三年报考人数','近三年招生人数','近三年录取人数']
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            toolbox: {
+                                feature: {
+                                    saveAsImage: {}
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: ['第一年','第二年','第三年']
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [
+                                {
+                                    name:'近三年分数信息',
+                                    type:'line',
+                                    stack: '总量',
+                                    data:[res.scoreMap.firstYearScore, res.scoreMap.secondYearScore, res.scoreMap.thirdYearScore]
+                                },
+                                {
+                                    name:'近三年报考人数',
+                                    type:'line',
+                                    stack: '总量',
+                                    data:[res.applyMap.firstYearApply, res.applyMap.secondYearApply, res.applyMap.thirdYearApply]
+                                },
+                                {
+                                    name:'近三年招生人数',
+                                    type:'line',
+                                    stack: '总量',
+                                    data:[res.enrollmentMap.firstYearEnrollment, res.enrollmentMap.secondYearEnrollment, res.enrollmentMap.thirdYearEnrollment]
+                                },
+                                {
+                                    name:'近三年录取人数',
+                                    type:'line',
+                                    stack: '总量',
+                                    data:[res.admissionMap.firstYearAdmission, res.admissionMap.secondYearAdmission, res.admissionMap.thirdYearAdmission]
+                                }
+                            ]
+                        });
+                    }else {
+                        toastr.info("错误信息"+res.msg);
+                    }
+                })
+            })
+            })
+
+            // 使用刚指定的配置项和数据显示图表。
+            // myChart.setOption(option);
+
+
+
+
+			// layui.use(['form', 'jquery', 'admin','layer'], function() {
+			// 	var form = layui.form,
+			// 		$ = layui.jquery,
+			// 		admin = layui.admin,
+			// 		layer = layui.layer;
+            //
+			// 	//自定义验证规则
+			// 	form.verify({
+			// 		nikename: function(value) {
+			// 			if(value.length < 5) {
+			// 				return '昵称至少得5个字符啊';
+			// 			}
+			// 		}
+			// 	});
+			// 	//页面初始化加载
+			// 	$(function(){
+			// 		setTimeout(function(){
+			// 			frameVal();
+			// 		},100);
+			// 	});
+			// 	function frameVal(){
+			// 		var dataId = $('input[name="dataId"]').val();
+			// 		var index = parent.layer.getFrameIndex(window.name);
+			// 	    parent.layui.jquery("#memberList tr").each(function(){
+			// 	    	if($(this).attr('data-id')==dataId){
+			// 	    		console.log($(this));
+			// 	    		var tdArr=$(this).children('td');
+			// 	    		var username = tdArr.eq(2).text(); //姓名
+			// 				var sex = tdArr.eq(3).text(); //性别
+			// 				var phone = tdArr.eq(4).text(); //电话
+			// 				var email = tdArr.eq(5).text(); //邮箱
+			// 				var address = tdArr.eq(6).text(); //地址
+			//
+			// 				$('input[name="username"]').val(username);
+			// 				console.log("sex:"+sex);
+			// 				$('input[name="sex"][value="'+sex+'"]').attr("checked",true);
+			// 				$('input[name="phone"]').val(phone);
+			// 				$('input[name="email"]').val(email);
+			// 				$('input[name="address"]').val(address);
+			// 				form.render();
+			// 	    	}
+			// 	    });
+			// 	}
+			// 	//监听提交
+			// 	form.on('submit(add)', function(data) {
+			// 		console.log(data);
+			// 		//发异步，把数据提交给php
+			// 		layer.alert("增加成功", {
+			// 			icon: 6
+			// 		}, function() {
+			// 			// 获得frame索引
+			// 			var index = parent.layer.getFrameIndex(window.name);
+			// 			//关闭当前frame
+			// 			parent.layer.close(index);
+			// 		});
+			// 		return false;
+			// 	});
+
+			// });
+		</script>
+	</body>
+
+</html>

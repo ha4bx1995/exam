@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>订单列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../static/css/font.css">
+		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+	</head>
+
+	<body>
+		<div class="weadmin-nav">
+			<span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">信息查询</a>
+        <a><cite>学校信息查询</cite></a>
+      </span>
+			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
+		</div>
+		<div class="weadmin-body">
+			<div class="layui-row">
+				<form class="layui-form layui-col-md12 we-search">
+					<!--<div class="layui-inline">-->
+						<!--<input class="layui-input" placeholder="开始日" name="start" id="start">-->
+					<!--</div>-->
+					<!--<div class="layui-inline">-->
+						<!--<input class="layui-input" placeholder="截止日" name="end" id="end">-->
+					<!--</div>-->
+					<div class="layui-input-inline" >
+						<select lay-filter="province" id="loadProvince" >  <!--加载省级列表-->
+							<option value="" label="省份"></option>
+						</select>
+					</div>
+					<div class="layui-input-inline">
+						<select lay-filter="city"  name="exUniCity" id="loadCity">  <!--根据省级列表，加载城市列表-->
+							<option value="" label="城市"></option>
+						</select>
+					</div>
+					<div class="layui-input-inline">
+						<select lay-filter="type" name="exUniType" id="loadUniType">
+							<option value="" label="学校类型"></option>
+						</select>
+					</div>
+					<div class="layui-input-inline">
+						<select lay-filter="grade" name="exUniGrade" id="loadUniGrade">
+							<option value="" label="学校层次"></option>
+						</select>
+					</div>
+					<div class="layui-input-inline">
+						<select lay-filter="nature" name="exUniNature" id="loadUniNature">
+							<option value="" label="办学类型"></option>
+						</select>
+					</div>
+					<div class="layui-input-inline">
+						<select lay-filter="level" name="exUniLevel" id="loadUniLevel">
+							<option value="" label="学校水平"></option>
+						</select>
+					</div>
+					<!--<div class="layui-input-inline">-->
+						<!--<select name="contrller">-->
+							<!--<option value="">订单状态</option>-->
+							<!--<option value="0">待确认</option>-->
+							<!--<option value="1">已确认</option>-->
+							<!--<option value="2">已收货</option>-->
+							<!--<option value="3">已取消</option>-->
+							<!--<option value="4">已完成</option>-->
+							<!--<option value="5">已作废</option>-->
+						<!--</select>-->
+					<!--</div>-->
+					<div class="layui-inline">
+						<input type="text" name="exUniName" placeholder="请输入学校名称" autocomplete="off" class="layui-input" id="uniName">
+					</div>
+					<button class="layui-btn" lay-submit=""  lay-filter="searchCollage" type="submit"><i class="layui-icon">&#xe615;</i></button>
+				</form>
+			</div>
+			<div class="weadmin-block">
+				<!--<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
+				<!--<button class="layui-btn" onclick="WeAdminShow('添加订单','./add.html')"><i class="layui-icon"></i>添加</button>-->
+				<span class="fr" style="line-height:40px" id="total-data">共有数据：88 条</span>
+			</div>
+			<table class="layui-table" id="uniMsg" lay-filter="layui-recommend">
+				<!--<thead>-->
+					<!--<tr>-->
+						<!--<th>-->
+							<!--<div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>-->
+						<!--</th>-->
+						<!--<th>订单编号</th>-->
+						<!--<th>收货人</th>-->
+						<!--<th>总金额</th>-->
+						<!--<th>应付金额</th>-->
+						<!--<th>订单状态</th>-->
+						<!--<th>支付状态</th>-->
+						<!--<th>发货状态</th>-->
+						<!--<th>支付方式</th>-->
+						<!--<th>配送方式</th>-->
+						<!--<th>下单时间</th>-->
+						<!--<th>操作</th>-->
+					<!--</tr>-->
+				<!--</thead>-->
+				<!--<tbody>-->
+					<!--<tr>-->
+						<!--<td>-->
+							<!--<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>-->
+						<!--</td>-->
+						<!--<td>2017009171822298053</td>-->
+						<!--<td>老王:18925139194</td>-->
+						<!--<td>7829.10</td>-->
+						<!--<td>7854.10</td>-->
+						<!--<td>待确认</td>-->
+						<!--<td>未支付</td>-->
+						<!--<td>未发货</td>-->
+						<!--<td>其他方式</td>-->
+						<!--<td>申通物流</td>-->
+						<!--<td>2017-08-17 18:22</td>-->
+						<!--<td class="td-manage">-->
+							<!--<a title="查看" onclick="WeAdminShow('编辑','order-view.html')" href="javascript:;">-->
+								<!--<i class="layui-icon">&#xe63c;</i>-->
+							<!--</a>-->
+							<!--<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">-->
+								<!--<i class="layui-icon">&#xe640;</i>-->
+							<!--</a>-->
+						<!--</td>-->
+					<!--</tr>-->
+				<!--</tbody>-->
+			</table>
+			<div id="paging">
+				<!--<div>-->
+					<!--<a class="prev" href="">&lt;&lt;</a>-->
+					<!--<a class="num" href="">1</a>-->
+					<!--<span class="current">2</span>-->
+					<!--<a class="num" href="">3</a>-->
+					<!--<a class="num" href="">489</a>-->
+					<!--<a class="next" href="">&gt;&gt;</a>-->
+				<!--</div>-->
+			</div>
+
+		</div>
+		<script type="text/html" id="opBar">
+			<a class="layui-btn-normal layui-btn" lay-event="edit">学校官网</a>
+			<a class="layui-btn-warm layui-btn" lay-event="show">收藏</a>
+			<a class="layui-btn-danger layui-btn" lay-event="analysis">近三年信息</a>
+		</script>
+		<script type="text/javascript">
+			layui.extend({
+				admin: '{/}../../static/js/admin'
+			});
+			layui.use(['laydate','jquery','admin','form','table','laypage'], function() {
+				var laydate = layui.laydate,
+					$ = layui.jquery,
+					form = layui.form,
+					table = layui.table,
+					laypage = layui.laypage,
+					admin = layui.admin;
+
+
+				var total = 0;
+				var token = "";
+				//页面加载时 初始化必要的静态数据
+				$(function () {
+				    token = localStorage.getItem("token");
+					//提交ajax请求，初始化省份静态数据
+                    $.post("http://localhost:8080/getStaticData?token="+token,function (res) {
+						console.log(res);
+						var province = res.listProvince;
+						var uniGrade = res.listUniGrade;
+						var uniLevel = res.listUniLevel;
+						var uniNature = res.listUniNature;
+						var uniType = res.listUniType;
+						var provinceHtml = "";
+                        console.log(res.listProvince);
+						//遍历整个省份集合，拼接html嵌入文本
+                        res.listProvince.forEach(function (item) {
+							provinceHtml += "<option value="+item.attrCode+">"+item.attrSpecName+"</option>";
+                            //$("#loadProvince").append("<option value="+item.attrSpecName+">"+item.attrSpecName+"</option>");
+							//console.log(provinceHtml);
+                        });
+
+                        //省份使用attrCode区分 城市以及其他value值使用attrValueId区分
+                        var typeHtml = "";
+                        res.listUniType.forEach(function (item) {
+                            typeHtml += "<option value="+item.attrValueId+">"+item.attrValueName+"</option>";
+                        });
+
+                        var gradeHtml = "";
+                        res.listUniGrade.forEach(function (item) {
+                            gradeHtml += "<option value="+item.attrValueId+">"+item.attrValueName+"</option>";
+                        });
+
+                        var natureHtml = "";
+                        res.listUniNature.forEach(function (item) {
+                            natureHtml += "<option value="+item.attrValueId+">"+item.attrValueName+"</option>";
+                        });
+
+                        var levelHtml = "";
+                        res.listUniLevel.forEach(function (item) {
+                            levelHtml += "<option value="+item.attrValueId+">"+item.attrValueName+"</option>";
+                        })
+
+
+						$("#loadProvince").append(provinceHtml);
+						$("#loadUniType").append(typeHtml);
+						$("#loadUniGrade").append(gradeHtml);
+						$("#loadUniNature").append(natureHtml);
+						$("#loadUniLevel").append(levelHtml);
+						form.render('select');				//这里简直是个大坑 ！！！！！！
+                        loadData(1,10);				//页面初始化默认加载第一页
+
+                    });
+
+                });
+
+
+				// var total = 0;
+				// //加载分页组件
+				// laypage.render({
+                //
+				// })
+
+                //监听toolbar工具栏操作
+                table.on('tool(layui-recommend)',function (obj) {
+                    var data  =obj.data;		//获得该行数据
+                    var layEvent = obj.event;	//获得 lay-event 对应的值（
+                    var tr = obj.tr;  ////获得当前行 tr 的 DOM 对象（如果有的话）
+                    if(layEvent === 'edit'){
+                        //alert(data.exUniId);
+                        window.open(data.exUniWebsite);
+                    }
+                    if(layEvent === 'show'){
+                        token = localStorage.getItem("token");
+                        $.post("http://localhost:8080/collectCollage?token="+token,{exUniCode:data.exUniCode,exUniName:data.exUniName},function (res) {
+                            if(res.resultCode == "0000"){
+                                layer.alert("提示："+res.resultMsg);
+                            }else {
+                                layer.alert("提示："+res.resultMsg);
+                            }
+                        })
+                        //调用收藏接口
+                    }
+                    if(layEvent === "analysis"){
+                        WeAdminEdit(data.exUniName+"数据分析",'../member/edit.html',data.exUniCode);
+					}
+                });
+
+                var province = "";
+				//给省份下拉菜单绑定监听事件 layui写法
+				form.on('select(province)',function (data) {
+				    token = localStorage.getItem("token");
+					//alert(data.value);
+					province = data.value;
+                    $("#loadCity").empty();
+                    form.render('select');
+					//这里提交异步请求，根据省份attrCode加载对应的城市
+                    $.post("http://localhost:8080/getCityByAttrCode?token="+token,{attrCode:data.value},function (cityList) {
+                        var cityHtml = "";
+                        cityList.forEach(function (item) {
+                            cityHtml += "<option value="+item.attrValueId+">"+item.attrValueName+"</option>";
+                        });
+                        $("#loadCity").append(cityHtml);
+                        form.render('select');				//坑！！！！
+                    });
+
+                });
+
+				var city = "";
+				var type = "";
+				var grade = "";
+				var nature = "";
+				var level = "";
+				//收集学校查询表单参数信息
+                // form.on('select(province)',function (param) {
+                 //    province1 = param.value;
+                // });
+                form.on('select(city)',function (param) {
+                    city = param.value;
+                });
+                form.on('select(type)',function (param) {
+                    type = param.value;
+                });
+                form.on('select(grade)',function (param) {
+                    grade = param.value;
+                });
+                form.on('select(nature)',function (param) {
+                    nature = param.value;
+                });
+                form.on('select(level)',function (param) {
+                    level = param.value;
+                });
+
+
+
+                var limitcount = 10;
+                var curnum = 1;
+                var exUniName = $("#uniName").val();
+				//条件查询学校信息
+				form.on('submit(searchCollage)',function (data) {
+
+					loadData(curnum,limitcount);
+                    return false;
+                });
+
+
+				//开启分页
+				// function  startPage(msg) {
+                    laypage.render({
+                        elem:'paging',
+                        count:81,
+                        limit:limitcount,
+						limits:[10, 20, 30],
+						groups:5,
+						curr:1,
+						jump:function (obj,first) {
+							if(!first){
+							    loadData(obj.curr,obj.limit);
+							}
+                        }
+                    });
+                // }
+
+
+				function loadData(curr,limit) {
+					token = localStorage.getItem("token");
+                    table.render({
+                        elem: '#uniMsg',
+                        url: 'http://localhost:8080/searchCollageByExample?token='+token,
+                        where:{
+                            exUniProvince:province,
+                            exUniCity:city,
+                            exUniType:type,
+                            exUniGrade:grade,
+                            exUniNature:nature,
+                            exUniLevel:level,
+                            exUniName:exUniName,
+                            curr:curr,
+							limit:limit
+                        },
+
+                        cols:[[
+                            {
+                                field:'exUniName',
+                                title:'学校名称',
+                                sort:true,
+                                width:200
+                            },
+                            {
+                                field:'exUniProvince',
+                                title:'省份',
+                                sort:true,
+                                width:100
+                            },
+                            {
+                                field:'exUniCity',
+                                title:'城市',
+                                sort:true,
+                                width:80
+                            },
+                            {
+                                field:'exUniType',
+                                title:'学校类型',
+                                sort:true,
+                                width:100
+                            },
+                            {
+                                field:'exUniLevel',
+                                title:'办学层次',
+                                sort:true,
+                                width:100
+                            },
+                            {
+                                field:'exUniGrade',
+                                title:'学校层次',
+                                sort:true,
+                                width:180
+                            },
+                            {
+                                field:'exUniTel',
+                                title:'招生电话',
+                                sort:true,
+                                width:150
+                            },
+                            {
+                                field:'exUniAddress',
+                                title:'学校地址',
+                                sort:true,
+                                width:320
+                            },
+                            // {
+                            //     field:'status',
+                            //     title:'推荐指数',
+                            //     sort:true,
+                            //     width:100,
+                            //     templet:setStatus,
+                            //     align:'center'
+                            // },
+                            {
+                                title:'操作',
+                                fiexd:'right',
+                                width:350,
+                                align:'center',
+                                toolbar:'#opBar'
+                            }
+
+                        ]],
+						done:function (res) {
+							total = res.count;
+							$("#total-data").html("共有数据： "+total+" 条");
+                        }
+                        //,…… //其他参数
+
+                    });
+                }
+
+
+
+
+
+				//执行一个laydate实例
+				laydate.render({
+					elem: '#start' //指定元素
+				});
+				//执行一个laydate实例
+				laydate.render({
+					elem: '#end' //指定元素
+				});
+				
+				/*用户-停用*/
+				function member_stop(obj, id) {
+					layer.confirm('确认要停用吗？', function(index) {
+						if($(obj).attr('title') == '启用') {
+							//发异步把用户状态进行更改
+							$(obj).attr('title', '停用')
+							$(obj).find('i').html('&#xe62f;');
+	
+							$(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+							layer.msg('已停用!', {
+								icon: 5,
+								time: 1000
+							});
+	
+						} else {
+							$(obj).attr('title', '启用')
+							$(obj).find('i').html('&#xe601;');
+	
+							$(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+							layer.msg('已启用!', {
+								icon: 5,
+								time: 1000
+							});
+						}
+					});
+				}
+	
+				/*用户-删除*/
+				function member_del(obj, id) {
+					layer.confirm('确认要删除吗？', function(index) {
+						//发异步删除数据
+						$(obj).parents("tr").remove();
+						layer.msg('已删除!', {
+							icon: 1,
+							time: 1000
+						});
+					});
+				}
+	
+				function delAll(argument) {
+					var data = tableCheck.getData();
+					layer.confirm('确认要删除吗？' + data, function(index) {
+						//捉到所有被选中的，发异步进行删除
+						layer.msg('删除成功', {
+							icon: 1
+						});
+						$(".layui-form-checked").not('.header').parents('tr').remove();
+					});
+				}
+			});
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	作者：github.com/WangEn
+	时间：2018-02-02
+	描述：修改form样式
+-->
+	<head>
+		<meta charset="UTF-8">
+		<title>删除会员-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../static/css/font.css">
+		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+	</head>
+
+	<body>
+		<div class="weadmin-nav">
+			<span class="layui-breadcrumb">
+				<a href="javascript:;">首页</a> <a href="javascript:;">会员管理</a>
+				<a href="javascript:;"><cite>删除会员</cite></a>
+			</span>
+			<a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right" href="javascript:location.replace(location.href);"
+			 title="刷新">
+				<i class="layui-icon layui-icon-refresh"></i>
+			</a>
+		</div>
+		<div class="weadmin-body">
+			<div class="layui-row">
+				<form class="layui-form layui-col-md12 we-search">
+					推荐学校：
+
+					<div class="layui-inline">
+						<input type="text" id="sumScore" name="sumScore" placeholder="请输入考试总分" autocomplete="off" class="layui-input" style="width: 500px">
+					</div>
+					<button class="layui-btn" lay-submit="" id="score" lay-filter="submitScore" type="submit"><i class="layui-icon">&#xe615;</i></button>
+				</form>
+			</div>
+			<div class="weadmin-block">
+				<button class="layui-btn layui-btn-danger">
+					<i class="layui-icon layui-icon-search"></i>推荐学校
+				</button>
+			</div>
+			<table class="layui-table" id="uniListHeshi" lay-filter="uniListHeshi">
+
+			</table>
+			<div class="weadmin-block">
+				<button class="layui-btn layui-btn-danger" >
+					<i class="layui-icon layui-icon-search"></i>冲刺学校
+				</button>
+
+			</div>
+			<table class="layui-table" id="uniListChongci" lay-filter="uniListChongci">
+
+			</table>
+			<div class="weadmin-block">
+				<button class="layui-btn layui-btn-danger">
+					<i class="layui-icon layui-icon-search"></i>求稳学校
+				</button>
+
+			</div>
+			<table class="layui-table" id="uniListQiuwen" lay-filter="uniListQiuwen">
+
+			</table>
+			<!--<div class="page">-->
+				<!--<div>-->
+					<!--<a class="prev" href="">&lt;&lt;</a>-->
+					<!--<a class="num" href="">1</a>-->
+					<!--<span class="current">2</span>-->
+					<!--<a class="num" href="">3</a>-->
+					<!--<a class="num" href="">489</a>-->
+					<!--<a class="next" href="">&gt;&gt;</a>-->
+				<!--</div>-->
+			<!--</div>-->
+
+		</div>
+		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+		<script src="../../static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+	<script type="text/html" id="opBar">
+		<a class="layui-btn-normal layui-btn" lay-event="edit">查看学校官网</a>
+		<a class="layui-btn-warm layui-btn" lay-event="show">收藏</a>
+	</script>
+	<script type="text/javascript">
+		//window.onload = alert(111);
+        layui.use(['laydate','jquery','admin','form','table','laypage'], function() {
+            var laydate = layui.laydate,
+                $ = layui.jquery,
+                form = layui.form,
+                table = layui.table,
+                laypage = layui.laypage,
+                admin = layui.admin;
+
+
+            var total = 0;
+            var token = "";
+
+            var limitcount = 10;
+            var curnum = 1;
+
+
+            $(function () {
+                checkBtn("uniListHeshi");
+                checkBtn("uniListChongci");
+                checkBtn("uniListQiuwen");
+            });
+
+            function checkBtn(selector) {
+                //监听toolbar工具栏操作
+                table.on('tool('+selector+')',function (obj) {
+                    var data  =obj.data;		//获得该行数据
+                    var layEvent = obj.event;	//获得 lay-event 对应的值（
+                    var tr = obj.tr;  ////获得当前行 tr 的 DOM 对象（如果有的话）
+                    if(layEvent === 'edit'){
+                        //alert(data.exUniId);
+                        window.open(data.exUniWebsite);
+                    }
+                    if(layEvent === 'show'){
+                        token = localStorage.getItem("token");
+                        $.post("http://localhost:8080/collectCollage?token="+token,{exUniCode:data.exUniCode,exUniName:data.exUniName},function (res) {
+                            if(res.resultCode == "0000"){
+                                layer.alert("提示："+res.resultMsg);
+                            }else {
+                                layer.alert("提示："+res.resultMsg);
+                            }
+                        })
+                        //调用收藏接口
+                    }
+                });
+            }
+
+
+
+
+            //条件查询学校信息
+            form.on('submit(submitScore)',function (data) {
+                normalRecommendChongci();
+                normalRecommendQiuwen();
+                normalRecommendHeshi();
+                return false;
+            });
+
+            function normalRecommendChongci() {
+                searchCollage("http://localhost:8080/normalRecommendChongci","#uniListChongci");
+            };
+
+            function normalRecommendQiuwen() {
+                searchCollage("http://localhost:8080/normalRecommendQiuwen","#uniListQiuwen");
+            };
+
+            function normalRecommendHeshi() {
+                searchCollage("http://localhost:8080/normalRecommendHeshi","#uniListHeshi");
+            }
+
+
+
+
+
+            /*
+            封装一个函数，发送请求
+             */
+            function searchCollage(url,selector) {
+                token = localStorage.getItem("token");
+                var sumScore = $("#sumScore").val();
+                if(sumScore == null || sumScore == ""){
+                    layer.alert("哥哥，参数不能为空哦！~");
+                    return;
+                }
+                table.render({
+                    elem: selector,
+                    url: url+'?token='+token,
+                    where:{
+                        sumScore:sumScore,
+                    },
+
+                    cols:[[
+                        {
+                            field:'exUniName',
+                            title:'学校名称',
+                            sort:true,
+                            width:200
+                        },
+                        {
+                            field:'exUniProvince',
+                            title:'省份',
+                            sort:true,
+                            width:100
+                        },
+                        {
+                            field:'exUniCity',
+                            title:'城市',
+                            sort:true,
+                            width:80
+                        },
+                        {
+                            field:'exUniType',
+                            title:'学校类型',
+                            sort:true,
+                            width:100
+                        },
+                        {
+                            field:'exUniLevel',
+                            title:'办学层次',
+                            sort:true,
+                            width:100
+                        },
+                        {
+                            field:'exUniGrade',
+                            title:'学校层次',
+                            sort:true,
+                            width:180
+                        },
+                        {
+                            field:'exUniTel',
+                            title:'招生电话',
+                            sort:true,
+                            width:150
+                        },
+                        {
+                            field:'exUniAddress',
+                            title:'学校地址',
+                            sort:true,
+                            width:300
+                        },
+                        // {
+                        //     field:'status',
+                        //     title:'推荐指数',
+                        //     sort:true,
+                        //     width:100,
+                        //     templet:setStatus,
+                        //     align:'center'
+                        // },
+                        {
+                            title:'操作',
+                            fiexd:'right',
+                            width:310,
+                            align:'center',
+                            toolbar:'#opBar'
+                        }
+
+                    ]]
+                    //,…… //其他参数
+
+                });
+            }
+
+
+            function addMember(){
+                var _len = $('#memberList tr').length;
+                alert(_len);
+                $('#memberList').append(
+                    '<tr data-id="' + _len + '">' +
+                    '<td>'+
+                    '<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="5"><i class="layui-icon">&#xe605;</i></div>'+
+                    '</td>'+
+                    '<td>5</td>'+
+                    '<td>'+$('input[name="username"]').val()+'</td>'+
+                    '<td>'+$('input[name="sex"]').val()+'</td>'+
+                    '<td>'+$('input[name="phone"]').val()+'</td>'+
+                    '<td>'+$('input[name="email"]').val()+'</td>'+
+                    '<td>北京市西城区</td>'+
+                    '<td>2018-01-01 11:11:42</td>'+
+                    '<td class="td-status"><span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span></td>'+
+                    '<td class="td-manage">'+
+                    '<a onclick="member_stop(this,\'10001\')" href="javascript:;" title="启用"><i class="layui-icon">&#xe601;</i></a>'+
+                    '<a title="编辑" onclick="WeAdminShow(\'编辑\',\'./edit.html\',600,400)" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>'+
+                    '<a onclick="WeAdminShow(\'修改密码\',\'./password.html\',600,400)" title="修改密码" href="javascript:;"><i class="layui-icon">&#xe631;</i></a>'+
+                    '<a title="删除" onclick="member_del(this,\'要删除的id\')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>'+
+                    '</td>'+
+                    '</tr>'
+                );
+            }
+            /*用户-停用*/
+            function member_stop(obj, id) {
+                layer.confirm('确认要停用吗？', function(index) {
+
+                    if($(obj).attr('title') == '启用') {
+
+                        //发异步把用户状态进行更改
+                        $(obj).attr('title', '停用')
+                        $(obj).find('i').html('&#xe62f;');
+
+                        $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+                        layer.msg('已停用!', {
+                            icon: 5,
+                            time: 1000
+                        });
+
+                    } else {
+                        $(obj).attr('title', '启用')
+                        $(obj).find('i').html('&#xe601;');
+
+                        $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+                        layer.msg('已启用!', {
+                            icon: 5,
+                            time: 1000
+                        });
+                    }
+
+                });
+            }
+
+            /*用户-删除*/
+            function member_del(obj, id) {
+                layer.confirm('确认要删除吗？', function(index) {
+                    //发异步删除数据
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!', {
+                        icon: 1,
+                        time: 1000
+                    });
+                });
+            }
+
+            function delAll(argument) {
+
+                var data = tableCheck.getData();
+
+                layer.confirm('确认要删除吗？' + data, function(index) {
+                    //捉到所有被选中的，发异步进行删除
+                    layer.msg('删除成功', {
+                        icon: 1
+                    });
+                    $(".layui-form-checked").not('.header').parents('tr').remove();
+                });
+            }
+        });
+	</script>
+
+</html>

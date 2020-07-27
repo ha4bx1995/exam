@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-user/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-api/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-common-util/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-service-util/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-web-util/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-user-web/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-manager-service/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-manager-web/pom.xml" />
+        <option value="$PROJECT_DIR$/exam-passport-web/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/exam-user-web/src/main/resources/lib/layui/lay/jquery.cookie.js" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_9" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hgu.exam.manager.mapper.ManagerMapper">
+    <!--搭建manager模块mapper-->
+    <select id="selectFitCollage" resultType="cn.edu.hgu.exam.bean.UniversityDTO">
+        SELECT
+        e.ex_uni_id,
+        e.ex_uni_code,
+        e.ex_uni_province,
+        e.ex_uni_city,
+        e.ex_uni_type,
+        e.ex_uni_address,
+        e.ex_uni_level,
+        e.ex_uni_name,
+        e.ex_uni_build,
+        e.ex_uni_website,
+        e.ex_uni_desc,
+        e.ex_uni_tel,
+        e.ex_uni_nature,
+        e.ex_uni_avg,
+        e.ex_uni_min,
+        e.ex_uni_max,
+        e.ex_uni_city_level,
+        e.ex_uni_gra_rate,
+        e.ex_uni_ranking,
+        e.ex_uni_total,
+        e.ex_uni_grade,
+        e.ex_uni_art_sci
+        FROM exam_university e
+        WHERE 1=1
+        AND e.ex_uni_avg &gt; #{lowerLimit}
+        AND e.ex_uni_avg &lt; #{upperLimit}
+        AND e.ex_uni_art_sci = #{artOrScience}
+
+    </select>
+
+    <select id="selectHeshiCollage" resultType="cn.edu.hgu.exam.bean.UniversityDTO">
+        SELECT
+        e.ex_uni_id,
+        e.ex_uni_code,
+        e.ex_uni_province,
+        e.ex_uni_city,
+        e.ex_uni_type,
+        e.ex_uni_address,
+        e.ex_uni_level,
+        e.ex_uni_name,
+        e.ex_uni_build,
+        e.ex_uni_website,
+        e.ex_uni_desc,
+        e.ex_uni_tel,
+        e.ex_uni_nature,
+        e.ex_uni_avg,
+        e.ex_uni_min,
+        e.ex_uni_max,
+        e.ex_uni_city_level,
+        e.ex_uni_gra_rate,
+        e.ex_uni_ranking,
+        e.ex_uni_total,
+        e.ex_uni_grade,
+        e.ex_uni_art_sci
+        FROM exam_university e
+        WHERE 1=1
+        AND e.ex_uni_avg &gt; #{lowerLimit}
+        AND e.ex_uni_avg &lt; #{upperLimit}
+    </select>
+
+    <select id="selectStabilityCollage" resultType="cn.edu.hgu.exam.bean.UniversityDTO">
+        SELECT
+            e.ex_uni_id,
+            e.ex_uni_code,
+            e.ex_uni_province,
+            e.ex_uni_city,
+            e.ex_uni_type,
+            e.ex_uni_address,
+            e.ex_uni_level,
+            e.ex_uni_name,
+            e.ex_uni_build,
+            e.ex_uni_website,
+            e.ex_uni_desc,
+            e.ex_uni_tel,
+            e.ex_uni_nature,
+            e.ex_uni_avg,
+            e.ex_uni_min,
+            e.ex_uni_max,
+            e.ex_uni_city_level,
+            e.ex_uni_gra_rate,
+            e.ex_uni_ranking,
+            e.ex_uni_total,
+            e.ex_uni_grade,
+            e.ex_uni_art_sci
+        FROM exam_university e
+        WHERE 1=1
+              AND e.ex_uni_max &lt; #{sumScore}
+              AND e.ex_uni_max + 10 &gt; #{sumScore}
+              AND e.ex_uni_art_sci = #{artOrScience}
+    </select>
+
+    <select id="selectQiuwenCollage" resultType="cn.edu.hgu.exam.bean.UniversityDTO">
+        SELECT
+        e.ex_uni_id,
+        e.ex_uni_code,
+        e.ex_uni_province,
+        e.ex_uni_city,
+        e.ex_uni_type,
+        e.ex_uni_address,
+        e.ex_uni_level,
+        e.ex_uni_name,
+        e.ex_uni_build,
+        e.ex_uni_website,
+        e.ex_uni_desc,
+        e.ex_uni_tel,
+        e.ex_uni_nature,
+        e.ex_uni_avg,
+        e.ex_uni_min,
+        e.ex_uni_max,
+        e.ex_uni_city_level,
+        e.ex_uni_gra_rate,
+        e.ex_uni_ranking,
+        e.ex_uni_total,
+        e.ex_uni_grade,
+        e.ex_uni_art_sci
+        FROM exam_university e
+        WHERE 1=1
+        AND e.ex_uni_min-10 &lt; #{sumScore}
+        AND e.ex_uni_min+ 10 &gt; #{sumScore}
+
+    </select>
+
+    <select id="selectSprintCollage" resultType="cn.edu.hgu.exam.bean.UniversityDTO">
+        SELECT
+            e.ex_uni_id,
+            e.ex_uni_code,
+            e.ex_uni_province,
+            e.ex_uni_city,
+            e.ex_uni_type,
+            e.ex_uni_address,
+            e.ex_uni_level,
+            e.ex_uni_name,
+            e.ex_uni_build,
+            e.ex_uni_website,
+            e.ex_uni_desc,
+            e.ex_uni_tel,
+            e.ex_uni_nature,
+            e.ex_uni_avg,
+            e.ex_uni_min,
+            e.ex_uni_max,
+            e.ex_uni_city_level,
+            e.ex_uni_gra_rate,
+            e.ex_uni_ranking,
+            e.ex_uni_total,
+            e.ex_uni_grade,
+            e.ex_uni_art_sci
+        FROM exam_university e
+        WHERE 1=1
+              AND e.ex_uni_min &lt; #{sumScore}
+              AND e.ex_uni_min + 10 &gt; #{sumScore}
+              AND e.ex_uni_art_sci = #{artOrScience}
+    </select>
+
+    <select id="selectChongciCollage" resultType="cn.edu.hgu.exam.bean.UniversityDTO">
+        SELECT
+        e.ex_uni_id,
+        e.ex_uni_code,
+        e.ex_uni_province,
+        e.ex_uni_city,
+        e.ex_uni_type,
+        e.ex_uni_address,
+        e.ex_uni_level,
+        e.ex_uni_name,
+        e.ex_uni_build,
+        e.ex_uni_website,
+        e.ex_uni_desc,
+        e.ex_uni_tel,
+        e.ex_uni_nature,
+        e.ex_uni_avg,
+        e.ex_uni_min,
+        e.ex_uni_max,
+        e.ex_uni_city_level,
+        e.ex_uni_gra_rate,
+        e.ex_uni_ranking,
+        e.ex_uni_total,
+        e.ex_uni_grade,
+        e.ex_uni_art_sci
+        FROM exam_university e
+        WHERE 1=1
+        AND e.ex_uni_min &lt; #{sumScore}
+        AND e.ex_uni_min + 10 &gt; #{sumScore}
+    </select>
+
+    <insert id="insertStudentPerformance" parameterType="cn.edu.hgu.exam.bean.ExamUserPerformance" >
+        insert INTO
+        exam_user_performance
+        (
+            ex_performance_id,
+            user_id,
+            usename,
+            ex_chinese,
+            ex_math,
+            ex_foreign,
+            ex_multiple,
+            ex_art_or_sci,
+            ex_total_score
+        )
+        VALUES
+        (
+              #{eup.exPerformanceId},
+              #{eup.userId},
+              #{eup.usename},
+              #{eup.exChinese},
+              #{eup.exMath},
+              #{eup.exForeign},
+              #{eup.exMultiple},
+              #{eup.exArtOrSci},
+              #{eup.exTotalScore}
+        )
+    </insert>
+
+
+    <select id="selectUniByCode" parameterType="java.lang.String"
+            resultType="cn.edu.hgu.exam.bean.UniversityDTO">
+        SELECT
+            e.ex_uni_id,
+            e.ex_uni_code,
+            e.ex_uni_province,
+            e.ex_uni_city,
+            e.ex_uni_type,
+            e.ex_uni_address,
+            e.ex_uni_level,
+            e.ex_uni_name,
+            e.ex_uni_build,
+            e.ex_uni_website,
+            e.ex_uni_desc,
+            e.ex_uni_tel,
+            e.ex_uni_nature,
+            e.ex_uni_avg,
+            e.ex_uni_min,
+            e.ex_uni_max,
+            e.ex_uni_city_level,
+            e.ex_uni_gra_rate,
+            e.ex_uni_ranking,
+            e.ex_uni_total,
+            e.ex_uni_grade,
+            e.ex_uni_art_sci
+        FROM exam_university e
+        WHERE 1=1
+        AND e.ex_uni_code = #{exUniCode}
+    </select>
+</mapper>

@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>高考志愿填报辅助分析系统</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../static/css/font.css">
+	<link rel="stylesheet" href="../static/css/weadmin.css">
+    <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+
+    <!--添加css注册功能css部分样式-->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="../lib/othersCss/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/othersCss/form-elements.css">
+    <link rel="stylesheet" href="../lib/othersCss/style.css">
+    <link rel="stylesheet" href="../lib/othersCss/toastr.css">
+
+    <!--注册功能可能用到的图片-->
+    <link rel="shortcut icon" href="../lib/othersImg/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../lib/othersImg/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../lib/othersImg/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../lib/othersImg/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../lib/othersImg/apple-touch-icon-57-precomposed.png">
+
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script src="../lib/layui/layui.all.js" charset="utf-8"></script>
+    <script src="../lib/layui/jquery-3.1.1.min.js"></script>
+    <script src="../lib/layui/jquery.cookie.js"></script>
+    <!--添加注册功能部分js脚本-->
+    <script src="../lib/othersJs/bootstrap.min.js"></script>
+    <script src="../lib/othersJs/jquery.backstretch.min.js"></script>
+    <script src="../lib/othersJs/scripts.js"></script>
+    <script src="../lib/othersJs/toastr.js"></script>
+
+</head>
+<body class="login-bg">
+    
+    <div class="login">
+        <div class="message">高考志愿填报辅助分析系统</div>
+        <div id="darkbannerwrap"></div>
+        
+        <form method="post" action="/loginUser" class="layui-form" >
+            <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" id="username" >
+            <hr class="hr15">
+            <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input" id="password">
+            <hr class="hr15">
+            <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr20" >
+
+        </form>
+        <input type="hidden" th:value="${ReturnUrl}" id="ReturnUrl" >
+        <!--<input type="button" value="注册" id="register" data-modal-id="modal-register">-->
+        <a class="launch-modal" href="#" data-modal-id="modal-register" ><input type="button" value="注册"></a>
+        <!--<a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register">Launch modal</a>-->
+
+        <!--注册弹出层 以及form表单-->
+        <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                        </button>
+                        <h3 class="modal-title" id="modal-register-label">现在注册</h3>
+                        <!--<p>注册成功即可成为本系统用户</p>-->
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form role="form" action="" method="post" class="registration-form">
+                            <div class="form-group">
+                                <label class="sr-only" for="form-username">用户名</label>
+                                <input type="text" name="username" lay-verify="" placeholder="用户名..." class="form-username form-control" id="form-username">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-password">密码</label>
+                                <input type="text" name="password" placeholder="密码..." class="form-password form-control" id="form-password">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-nickname">昵称</label>
+                                <input type="text" name="nickname" placeholder="昵称..." class="form-nickname form-control" id="form-nickname">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-realname">真实姓名</label>
+                                <input type="text" name="realname" placeholder="真实姓名..." class="form-realname form-control" id="form-realname">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-age">年龄</label>
+                                <input type="text" name="age" placeholder="年龄..." class="form-age form-control" id="form-age">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-city">年龄</label>
+                                <input type="text" name="city" placeholder="所属城市..." class="form-city form-control" id="form-city">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-phoneNum">联系方式</label>
+                                <input type="text" name="phoneNum" placeholder="联系方式..." class="form-phoneNum form-control" id="form-phoneNum">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-email">Email</label>
+                                <input type="text" name="email" placeholder="Email..." class="form-email form-control" id="form-email">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="sr-only">是否学生</label>是否学生：
+                                是<input type="radio" value="1" name="isSudent" class="form-isStudent">&nbsp;&nbsp;&nbsp;
+                                否<input type="radio" value="0" name="isSudent" class="form-isStudent">
+                            </div>
+                            <!--<div class="form-group" id="form-score">-->
+                                <!--<label class="sr-only" for="form-sumScore">Email</label>-->
+                                <!--<input type="text" name="sumScore" placeholder="请输入您的总分数..." class="form-sumScore form-control" id="form-sumScore">-->
+                            <!--</div>-->
+
+
+
+                            <!--<div class="form-group">-->
+                                <!--<label class="sr-only" for="form-about-yourself">About yourself</label>-->
+                                <!--<textarea name="form-about-yourself" placeholder="About yourself..."-->
+                                          <!--class="form-about-yourself form-control" id="form-about-yourself"></textarea>-->
+                            <!--</div>-->
+                            <!--<button type="submit" class="btn">Sign me up!</button>-->
+                            <input class="register  " value="注册" lay-submit lay-filter="register" style="width:100%;" id="register" type="submit">
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--<a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register">Launch modal</a>-->
+    </div>
+
+    <script type="text/javascript">
+
+        toastr.options = {
+            closeButton: false,
+            debug: false,
+            progressBar: true,
+            positionClass: "toast-top-center",
+            onclick: null,
+            showDuration: "300",
+            hideDuration: "1000",
+            timeOut: "2000",
+            extendedTimeOut: "1000",
+            showEasing: "swing",
+            hideEasing: "linear",
+            showMethod: "fadeIn",
+            hideMethod: "fadeOut"
+        };
+
+
+            //注册事件
+            $("#register").click(function () {
+                var params = {
+                    username: $("#form-username").val(),
+                    password: $("#form-password").val(),
+                    nickname: $("#form-nickname").val(),
+                    realname: $("#form-realname").val(),
+                    age: $("#form-age").val(),
+                    city: $("#form-city").val(),
+                    email: $("#form-email").val(),
+                    phoneNum: $("#form-phoneNum").val(),
+                    isStudent: $("input[type='radio']:checked").val(),
+                    // sumScore : $("#form-sumScore").val()
+                }
+
+
+
+                //这里先完成一波校验
+                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(params.username)) {
+                    toastr.info("用户名不能有特殊字符");
+                    return;
+                }
+                if (/(^\_)|(\__)|(\_+$)/.test(params.username)) {
+                    //return '用户名首尾不能出现下划线\'_\'';
+                    toastr.info("用户名首尾不能出现下划线");
+                    return;
+                }
+                if (!/^[\S]{6,12}$/.test(params.username)) {
+                    toastr.info("用户名必须在6-12位");
+                    return;
+                }
+                if (!/^[\S]{6,12}$/.test(params.password)) {
+                    toastr.info("密码必须在6-16位");
+                    return;
+                }
+                if(!/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(params.email)){
+                    toastr.info("邮箱格式不正确");
+                    return;
+                }
+                if(!/^(([0-9]|[1-9][1-9]|1[0-7][0-9])(\\.[0-9]+)?|180)$/.test(params.age)){
+                    toastr.info("年龄非法！")
+                    return;
+                }
+                if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(params.phoneNum))){
+                    toastr.info("手机号码格式不正确");
+                    return;
+                }
+                if(params.isStudent == null || params.isStudent == ""){
+                    toastr.info("是否学生参数为必填");
+                }
+                $.post("http://localhost:8080/register", params, function (res) {
+                    if(res.msgCode == "0000"){
+                        toastr.info("注册成功!");
+                    }else {
+                        toastr.info("注册失败!");
+                    }
+                });
+            });
+
+
+
+            // M.dialog13 = jqueryAlert({
+            //     'icon'    : 'img/warning.png',
+            //     'content' : 'hello 程序员...',
+            //     'closeTime' : 2000,
+            // })
+            /**
+             * 提交注册表单
+             */
+                // layui.use('form', function(){
+                //     var form = layui.form;
+                //
+                //     //监听提交
+                //     form.on('submit(register)', function(data){
+                //
+                //         //alert(data.username);   //测试
+                //
+                //         //提交ajax请求到后台，完成注册功能，返回是否成功
+                //         $.post("http://localhost:8080/register",params,function (res) {
+                //             alert("接口返回");
+                //         });
+                //         //layer.msg(JSON.stringify(data.field));
+                //         return true;
+                //     });
+                // });
+
+
+            var user = {};
+            ;!function () {
+                var form = layui.form,
+                    layer = layui.layer;
+
+                form.on('submit(login)', function (data) {
+
+                    var username = $("#username").val();
+                    var password = $("#password").val();
+                    $.post("http://localhost:8080/loginUser", {
+                        username: username,
+                        password: password
+                    }, function (token) {
+                        var localData = token;
+                        if (token == "fail") {
+                            layer.alert("用户名或密码错误!");
+                        } else {
+                            //localStorage.setItem("token",""+token);        //将token变量保存至本地缓存，每次请求，带上token
+
+                            window.location.href = "http://127.0.0.1:8080/index" + "?token=" + token;
+                        }
+                        //这里不需要返回原页面，登录入口只有一个，登录成功之后，直接重定向到index
+                        //这里跳转Index页面的时候，需要在index方法里边判断登录成功的用户是否是学生，
+                        // 如果是学生，就根据分数调用后台接口返回一个查询成功的页面信息
+                    });
+
+                    return false;
+                });
+            }();
+
+            // layui.extend({
+            // admin: '{/}./static/js/admin'
+            // });
+            // layui.use(['form','admin'], function(){
+            //   var form = layui.form
+            //   	,admin = layui.admin;
+            //   // layer.msg('玩命卖萌中', function(){
+            //   //   //关闭后的操作
+            //   //   });
+            //   //监听提交
+            //   form.on('submit(login)', function(data){
+            //     // alert(888)
+            //     layer.msg(JSON.stringify(data.field),function(){
+            //         location.href='./index.html';
+            //
+            //     });
+            //     return false;
+            //   });
+            // });
+
+    </script>  
+    <!-- 底部结束 -->
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/exam.iml" filepath="$PROJECT_DIR$/.idea/exam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-api/exam-api.iml" filepath="$PROJECT_DIR$/exam-api/exam-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-common-util/exam-common-util.iml" filepath="$PROJECT_DIR$/exam-common-util/exam-common-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-manager-service/exam-manager-service.iml" filepath="$PROJECT_DIR$/exam-manager-service/exam-manager-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-manager-web/exam-manager-web.iml" filepath="$PROJECT_DIR$/exam-manager-web/exam-manager-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-parent/exam-parent.iml" filepath="$PROJECT_DIR$/exam-parent/exam-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-passport-web/exam-passport-web.iml" filepath="$PROJECT_DIR$/exam-passport-web/exam-passport-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-service-util/exam-service-util.iml" filepath="$PROJECT_DIR$/exam-service-util/exam-service-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-user/exam-user.iml" filepath="$PROJECT_DIR$/exam-user/exam-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-user-service/exam-user-service.iml" filepath="$PROJECT_DIR$/exam-user-service/exam-user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-user-web/exam-user-web.iml" filepath="$PROJECT_DIR$/exam-user-web/exam-user-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exam-web-util/exam-web-util.iml" filepath="$PROJECT_DIR$/exam-web-util/exam-web-util.iml" />
+    </modules>
+  </component>
+</project>

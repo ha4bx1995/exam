@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>文章列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<meta name="Description" content="基于layUI数据表格操作"/>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../static/css/font.css">
+		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+		<style type="text/css">
+			.layui-form-switch {
+				width: 55px;
+			}			
+			.layui-form-switch em {
+				width: 40px;
+			}
+			body{overflow-y: scroll;}
+		</style>
+	</head>
+
+	<body>
+		<div class="weadmin-nav">
+			<span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">根据专业查询学校</a>
+        <a>
+          <cite>学校列表</cite></a>
+      </span>
+			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+				<i class="layui-icon" style="line-height:30px">&#x1002;</i></a>
+		</div>
+		<div class="weadmin-body">
+			<div class="layui-row">
+				<form class="layui-form layui-col-md12 we-search">
+
+					<div class="weadmin-block">
+						<button class="layui-btn layui-btn-danger">
+							<i class="layui-icon layui-icon-search"></i>选择专业类别
+						</button>
+					</div>
+					<div class="layui-input-block" id="majorType">
+
+					</div>
+
+					<div class="weadmin-block">
+						<button class="layui-btn layui-btn-danger">
+							<i class="layui-icon layui-icon-search"></i>选择专业
+						</button>
+					</div>
+					<div class="layui-input-block" id="majorList">
+
+					</div>
+					<!--<div class="layui-inline">-->
+						<!--<input class="layui-input" placeholder="开始日" name="start" id="start">-->
+					<!--</div>-->
+					<!--<div class="layui-inline">-->
+						<!--<input class="layui-input" placeholder="截止日" name="end" id="end">-->
+					<!--</div>-->
+					<!--<div class="layui-inline" >-->
+						<!--<input type="text" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">-->
+					<!--</div>-->
+					<!--<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>-->
+					<!--<button class="layui-btn" data-type="Recommend"><i class="layui-icon">&#xe6c6;</i>专业类别</button>-->
+				</form>
+			</div>
+			<div class="weadmin-block demoTable">
+				<!--<button class="layui-btn layui-btn-danger" data-type="getCheckData"><i class="layui-icon">&#xe640;</i>批量删除</button>-->
+				<!--<button class="layui-btn" data-type="Recommend"><i class="layui-icon">&#xe6c6;</i>推荐</button>-->
+				<!--<button class="layui-btn" data-type="Top"><i class="layui-icon">&#xe619;</i>置顶</button>-->
+				<!--<button class="layui-btn" data-type="Review"><i class="layui-icon">&#xe6b2;</i>审核</button>-->
+				<!--<button class="layui-btn" onclick="WeAdminShow('添加用户','./add.html',600,400)"><i class="layui-icon">&#xe89f;</i>添加</button>-->
+				<span class="fr" style="line-height:40px" id="totalData">共有数据：88 条</span>
+			</div>
+			<table class="layui-hide" id="uniList" lay-filter="uniList"></table>
+			<div id="paging"></div>
+
+
+			<script type="text/html" id="recommendTpl">
+				<input type="checkbox" name="zzz" lay-skin="switch" lay-text="已推荐|未推荐" {{d.recommend}}>
+			</script>
+			<script type="text/html" id="topTpl">
+				<input type="checkbox" name="show" lay-skin="switch" lay-text="已置顶|未置顶" {{d.top}}>
+			</script>
+			<script type="text/html" id="reviewTpl">
+			  <!-- 这里的 checked 的状态只是演示 -->
+			  <input type="checkbox" name="lock" value="{{d.id}}" title="锁定" lay-filter="lockDemo" {{ d.id == 1 ? 'checked' : '' }}>
+			</script>
+
+			<script type="text/html" id="operateTpl">
+				<a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 2, 600, 400)" href="javascript:;">
+					<i class="layui-icon">&#xe642;</i>
+				</a>
+				<a title="查看" onclick="WeAdminShow('查看文章','./show.html',600,400)" href="javascript:;">
+					<i class="layui-icon">&#xe63c;</i>
+				</a>
+				<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+					<i class="layui-icon">&#xe640;</i>
+				</a>
+			</script>
+			<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+			<!--<script src="../../lib/layui/jquery.cookie.js"></script>-->
+			<script src="list.js" type="text/javascript" charset="utf-8"></script>
+
+		</div>
+	</body>
+
+	<script type="text/html" id="opBar">
+		<a class="layui-btn-normal layui-btn" lay-event="edit">查看学校官网</a>
+		<a class="layui-btn-warm layui-btn" lay-event="show">收藏</a>
+	</script>
+	<script type="text/javascript">
+        layui.use(['laydate','jquery','admin','form','table','laypage'], function() {
+            var laydate = layui.laydate,
+                $ = layui.jquery,
+                form = layui.form,
+                table = layui.table,
+                laypage = layui.laypage,
+                admin = layui.admin;
+
+            var limitcount = 10;
+            var curnum = 1;
+            var majorTypeList = null;
+            var majorList = null;
+            var token = "";
+
+            table.on('tool(uniList)',function (obj) {
+                var data  =obj.data;		//获得该行数据
+                var layEvent = obj.event;	//获得 lay-event 对应的值（
+                var tr = obj.tr;  ////获得当前行 tr 的 DOM 对象（如果有的话）
+                if(layEvent === 'edit'){
+                    //alert(data.exUniId);
+                    window.open(data.exUniWebsite);
+                }
+                if(layEvent === 'show'){
+                    token = localStorage.getItem("token");
+                    $.post("http://localhost:8080/collectCollage?token="+token,{exUniCode:data.exUniCode,exUniName:data.exUniName},function (res) {
+                        if(res.resultCode == "0000"){
+                            layer.alert("提示："+res.resultMsg);
+                        }else {
+                            layer.alert("提示："+res.resultMsg);
+                        }
+                    })
+                    //调用收藏接口
+                }
+            });
+            var majorCodeParam = "";
+            var count = 0;
+			//页面加载时初始化需要的静态数据
+            $(function () {
+                token = localStorage.getItem("token");
+                // var userToken = layui.data('userToken');
+                //
+                // token = $.cookie('token');
+                //提交ajax请求，初始化专业类别静态数据
+                $.post("http://localhost:8080/getStaticMajorType?token="+token,function (res) {
+                    console.log(res);
+                    var majorTypeHtml = "";
+                    //遍历整个专业类别集合，拼接html嵌入文本
+					majorTypeList = res;
+                    res.forEach(function (item,index) {
+                        majorTypeHtml += "<button type='button' class='layui-btn layui-btn-primary layui-btn-sm' id=type"+index+"  value="+item.attrCode+"><i class='layui-icon'>&#xe6c6;</i>"+item.attrSpecName+"</button>";
+
+                        //console.log(provinceHtml);
+                    });
+
+                    $("#majorType").append(majorTypeHtml);
+
+                    //一开始默认选中第一个按钮  并加载第一个类别的专业信息
+					$("#type0").removeClass("layui-btn-primary");
+                    $("#type0").addClass("layui-btn-warm");
+					var attrCode = $("#type0").val();
+                    getMajorMsgByType(attrCode);
+
+
+
+                    // form.render('select');				//这里简直是个大坑 ！！！！！！
+                    // loadData(1,10);				//页面初始化默认加载第一页
+                });
+            });
+            
+            function  readyParams() {
+
+                //遍历所有按钮，将选中的按钮的值获取到
+                majorList.forEach(function (item,index) {
+                    // alert($("#province"+index).hasClass("layui-btn-warm"));
+                    if($("#major"+index).hasClass("layui-btn-warm")){
+                        majorCodeParam = $("#major"+index).val();
+                    }
+                });
+                return majorCodeParam;
+            }
+
+
+            //封装一个func  参数专业类别编码  返回值所有类别下的信息
+			function  getMajorMsgByType(attrCode) {
+                $.post("http://localhost:8080/getMajorMsgByType?token="+token,{attrCode:attrCode},function (res) {
+                    majorList = res;
+                    var majorHtml = "";
+					res.forEach(function (item,index) {
+                        majorHtml += "<button type='button' class='layui-btn layui-btn-primary layui-btn-sm' id=major"+index+"  value="+item.exMajorCode+"><i class='layui-icon'>&#xe6c6;</i>"+item.exMajorName+"</button>";
+                    });
+                    $("#majorList").html(majorHtml);
+                    //默认选中第一个专业，并加重第一个专业的学校
+                    $("#major0").removeClass("layui-btn-primary");
+                    $("#major0").addClass("layui-btn-warm");
+                    var majorCode = $("#major0").val();
+                    getUniversityByMajorCode(curnum,limitcount,readyParams());
+                });
+            };
+
+
+
+
+            laypage.render({
+                elem:'paging',
+                count:100,
+                limit:limitcount,
+                limits:[10, 20, 30],
+                groups:5,
+                curr:1,
+                jump:function (obj,first) {
+                    if(!first){
+                        getUniversityByMajorCode(obj.curr,obj.limit,majorCodeParam);
+                    }
+                }
+            });
+
+            $(document).on('click','#majorList .layui-btn',function (e) {
+                var majorCode = $(this).val();
+                majorCodeParam = majorCode;
+                var selector = "#majorList button";
+                var btnIdName = "#major";
+                var selectedNor = "layui-btn-primary";
+                var selected = "layui-btn-warm";
+                dealBtn(selector,btnIdName,selectedNor,selected,majorCode);
+                //调用查询接口
+                getUniversityByMajorCode(curnum,limitcount,majorCode);
+            });
+
+            function getUniversityByMajorCode(curr,limit,majorCode) {
+
+                table.render({
+                    elem: '#uniList',
+                    url: 'http://localhost:8080/getUniversityByMajorCode',
+                    where:{
+                        majorCode:majorCode,
+                        curr:curr,
+                        limit:limit
+                    },
+
+                    cols:[[
+                        {
+                            field:'exUniName',
+                            title:'学校名称',
+                            sort:true,
+                            width:200
+                        },
+                        {
+                            field:'exUniProvince',
+                            title:'省份',
+                            sort:true,
+                            width:100
+                        },
+                        {
+                            field:'exUniCity',
+                            title:'城市',
+                            sort:true,
+                            width:80
+                        },
+                        {
+                            field:'exUniType',
+                            title:'学校类型',
+                            sort:true,
+                            width:100
+                        },
+                        {
+                            field:'exUniLevel',
+                            title:'办学层次',
+                            sort:true,
+                            width:100
+                        },
+                        {
+                            field:'exUniGrade',
+                            title:'学校层次',
+                            sort:true,
+                            width:180
+                        },
+                        {
+                            field:'exUniTel',
+                            title:'招生电话',
+                            sort:true,
+                            width:150
+                        },
+                        {
+                            field:'exUniAddress',
+                            title:'学校地址',
+                            sort:true,
+                            width:300
+                        },
+                        // {
+                        //     field:'status',
+                        //     title:'推荐指数',
+                        //     sort:true,
+                        //     width:100,
+                        //     templet:setStatus,
+                        //     align:'center'
+                        // },
+                        {
+                            title:'操作',
+                            fiexd:'right',
+                            width:310,
+                            align:'center',
+                            toolbar:'#opBar'
+                        }
+
+                    ]],
+					done:function (res) {
+						count = res.count;
+						$("#totalData").html("共有数据： "+count + " 条");
+                    }
+                    //,…… //其他参数
+
+                });
+            };
+
+
+				$(document).on('click','#majorType .layui-btn',function (e) {
+				    var attrCode = $(this).val();
+				    var selector = "#majorType button";
+				    var btnIdName = "#type";
+				    var selectedNor = "layui-btn-primary";
+				    var selected = "layui-btn-warm";
+                    dealBtn(selector,btnIdName,selectedNor,selected,attrCode);
+                    getMajorMsgByType(attrCode);
+                });
+
+
+            /**
+			 * 处理页面按钮选择状态
+             * @param selector  选择器
+             * @param btnIdName  id前缀信息
+             * @param selectedNor	未选中的class样式
+             * @param selected		选中的class样式
+             */
+				function dealBtn(selector,btnIdName,selectedNor,selected,params) {
+                    Array.prototype.forEach.call(document.querySelectorAll(selector),function (item,index,arr) {
+                        //点击当前按钮之后，需要选择该按钮，并将其他按钮置为原状
+                        if(params && item.value != params){
+                            $(btnIdName+index).addClass(selectedNor);
+                            $(btnIdName+index).removeClass(selected);
+                        }else {
+                            $(btnIdName+index).removeClass(selectedNor);
+                            $(btnIdName+index).addClass(selected);
+                        }
+                        //alert(item.value);
+                    });
+                }
+                // $("#majorType .layui-btn").on('click',function () {
+                //
+                // });
+
+
+
+
+
+		})//layui last
+	</script>
+
+</html>

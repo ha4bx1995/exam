@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="demo" />
+        <module name="exam-api" />
+        <module name="exam-common-util" />
+        <module name="exam-manager-service" />
+        <module name="exam-manager-web" />
+        <module name="exam-passport-web" />
+        <module name="exam-service-util" />
+        <module name="exam-user" />
+        <module name="exam-user-service" />
+        <module name="exam-user-web" />
+        <module name="exam-web-util" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="demo" target="1.8" />
+      <module name="exam-api" target="1.8" />
+      <module name="exam-common-util" target="1.8" />
+      <module name="exam-manager-service" target="1.8" />
+      <module name="exam-manager-web" target="1.8" />
+      <module name="exam-parent" target="1.8" />
+      <module name="exam-passport-web" target="1.8" />
+      <module name="exam-service-util" target="1.8" />
+      <module name="exam-user" target="1.8" />
+      <module name="exam-user-service" target="1.8" />
+      <module name="exam-user-web" target="1.8" />
+      <module name="exam-web-util" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

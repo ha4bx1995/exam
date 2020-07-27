@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	作者：github.com/WangEn
+	时间：2018-02-02
+	描述：修改form样式
+-->
+	<head>
+		<meta charset="UTF-8">
+		<title>删除会员-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../static/css/font.css">
+		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+	</head>
+
+	<body>
+		<!--<div class="weadmin-nav">-->
+			<!--<span class="layui-breadcrumb">-->
+				<!--<a href="javascript:;">首页</a> <a href="javascript:;">会员管理</a>-->
+				<!--<a href="javascript:;"><cite>删除会员</cite></a>-->
+			<!--</span>-->
+			<!--<a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right" href="javascript:location.replace(location.href);"-->
+			 <!--title="刷新">-->
+				<!--<i class="layui-icon layui-icon-refresh"></i>-->
+			<!--</a>-->
+		<!--</div>-->
+		<div class="weadmin-body">
+			<div class="layui-row">
+				<form class="layui-form layui-col-md12 we-search">
+					<div class="layui-col-md6">
+						<div class="layui-form-item">
+							<label class="layui-form-label">用户名</label>
+							<div class="layui-input-block">
+								<input type="text" id="username" disabled="disabled" name="username" required  lay-verify="required|username"  autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">昵称</label>
+							<div class="layui-input-block">
+								<input type="text" id="nickname" name="nickname" required  lay-verify="required"  autocomplete="off" class="layui-input">
+							</div>
+						</div>
+
+						<div class="layui-form-item">
+							<label class="layui-form-label">年龄</label>
+							<div class="layui-input-block">
+								<input type="text" id="age" name="age" required  lay-verify="required|number"  autocomplete="off" class="layui-input">
+							</div>
+						</div>
+
+
+
+					</div>
+
+					<!--右边-->
+					<div class="layui-col-md6">
+						<div class="layui-form-item">
+							<label class="layui-form-label">真实姓名</label>
+							<div class="layui-input-block">
+								<input type="text" id="realname" name="realname" required  lay-verify="required"  autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">邮箱</label>
+							<div class="layui-input-block">
+								<input type="text" id="email" name="email" required  lay-verify="required|email"  autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">联系方式</label>
+							<div class="layui-input-block">
+								<input type="text" id="phoneNum" name="phoneNum" required  lay-verify="required|number|phone"  autocomplete="off" class="layui-input">
+							</div>
+						</div>
+					</div>
+
+
+
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn" lay-submit lay-filter="updateMsg">修改</button>
+							<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!--<div class="weadmin-block">-->
+				<!--<button class="layui-btn layui-btn-danger" onclick="delAll()">-->
+					<!--<i class="layui-icon layui-icon-delete"></i>批量恢复-->
+				<!--</button>-->
+				<!--<span class="fr" style="line-height:40px">共有数据：88 条</span>-->
+			<!--</div>-->
+			<!--<table class="layui-table">-->
+				<!--<thead>-->
+					<!--<tr>-->
+						<!--<th>-->
+							<!--<div class="layui-unselect header layui-form-checkbox" lay-skin="primary">-->
+								<!--<i class="layui-icon">&#xe605;</i>-->
+							<!--</div>-->
+						<!--</th>-->
+						<!--<th>ID</th>-->
+						<!--<th>用户名</th>-->
+						<!--<th>性别</th>-->
+						<!--<th>手机</th>-->
+						<!--<th>邮箱</th>-->
+						<!--<th>地址</th>-->
+						<!--<th>加入时间</th>-->
+						<!--<th>状态</th>-->
+						<!--<th>操作</th>-->
+					<!--</tr>-->
+				<!--</thead>-->
+				<!--<tbody>-->
+					<!--<tr>-->
+						<!--<td>-->
+							<!--<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'>-->
+								<!--<i class="layui-icon">&#xe605;</i>-->
+							<!--</div>-->
+						<!--</td>-->
+						<!--<td>1</td>-->
+						<!--<td>小明</td>-->
+						<!--<td>男</td>-->
+						<!--<td>13000000000</td>-->
+						<!--<td>admin@mail.com</td>-->
+						<!--<td>北京市 海淀区</td>-->
+						<!--<td>2017-01-01 11:11:42</td>-->
+						<!--<td class="td-status">-->
+							<!--<span class="layui-btn layui-btn-danger layui-btn-xs">-->
+								<!--已删除-->
+							<!--</span>-->
+						<!--<td class="td-manage">-->
+							<!--<a title="恢复" onclick="member_del(this,'要恢复的id')" href="javascript:;">-->
+								<!--<i class="layui-icon layui-icon-list"></i>-->
+							<!--</a>-->
+							<!--<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">-->
+								<!--<i class="layui-icon layui-icon-delete"></i>-->
+							<!--</a>-->
+						<!--</td>-->
+					<!--</tr>-->
+					<!--<tr>-->
+						<!--<td>-->
+							<!--<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>-->
+						<!--</td>-->
+						<!--<td>1</td>-->
+						<!--<td>小明</td>-->
+						<!--<td>男</td>-->
+						<!--<td>13000000000</td>-->
+						<!--<td>admin@mail.com</td>-->
+						<!--<td>北京市 海淀区</td>-->
+						<!--<td>2017-01-01 11:11:42</td>-->
+						<!--<td class="td-status">-->
+							<!--<span class="layui-btn layui-btn-danger layui-btn-xs">-->
+								<!--已删除-->
+							<!--</span>-->
+						<!--<td class="td-manage">-->
+							<!--<a title="恢复" onclick="member_del(this,'要恢复的id')" href="javascript:;">-->
+								<!--<i class="layui-icon layui-icon-list"></i>-->
+							<!--</a>-->
+							<!--<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">-->
+								<!--<i class="layui-icon layui-icon-delete"></i>-->
+							<!--</a>-->
+						<!--</td>-->
+					<!--</tr>-->
+				<!--</tbody>-->
+			<!--</table>-->
+			<!--<div class="page">-->
+				<!--<div>-->
+					<!--<a class="prev" href="">&lt;&lt;</a>-->
+					<!--<a class="num" href="">1</a>-->
+					<!--<span class="current">2</span>-->
+					<!--<a class="num" href="">3</a>-->
+					<!--<a class="num" href="">489</a>-->
+					<!--<a class="next" href="">&gt;&gt;</a>-->
+				<!--</div>-->
+			<!--</div>-->
+
+		</div>
+		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
+		<script src="../../static/js/eleDel.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+	<script type="text/javascript">
+        layui.use(['laydate','jquery','admin','form','table','laypage','layer'], function() {
+            var laydate = layui.laydate,
+                $ = layui.jquery,
+                form = layui.form,
+                table = layui.table,
+                laypage = layui.laypage,
+				layer  =layui.layer,
+                admin = layui.admin;
+
+            form.verify({
+                username: function(value, item){ //value：表单的值、item：表单的DOM对象
+                    if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                        return '用户名不能有特殊字符';
+                    }
+                    if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                        return '用户名首尾不能出现下划线\'_\'';
+                    }
+                    if(/^\d+\d+\d$/.test(value)){
+                        return '用户名不能全为数字';
+                    }
+                    if(/^[\S]{6,12}$/.test(value)){
+                        return '用户名必须在6-12位';
+					}
+                }
+
+                //我们既支持上述函数式的方式，也支持下述数组的形式
+                //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+                ,pass: [
+                    /^[\S]{6,12}$/
+                    ,'密码必须6到12位，且不能出现空格'
+                ]
+            });
+
+
+            var token = "";
+            //页面加载时需要先加载用户的基本信息
+			$(function () {
+				token = localStorage.getItem("token");
+                $.post("http://localhost:8080/getUserMsg?token="+token,function (res) {
+					if(res.code == "0000"){
+					    //查询成功
+						$("#username").val(res.data.username);
+						$("#realname").val(res.data.realname);
+						$("#nickname").val(res.data.nickname);
+						$("#age").val(res.data.age);
+						$("#email").val(res.data.email);
+						$("#phoneNum").val(res.data.phoneNum);
+					}else {
+					    layer.alert("异常：查询接口异常，请联系管理员");
+					}
+				});
+            });
+
+			//监听修改按钮，提交用户需要修改的信息
+            form.on('submit(updateMsg)',function (data) {
+                var username = $("#username").val();
+                var realname = $("#realname").val();
+                var nickname = $("#nickname").val();
+                var age = $("#age").val();
+                var email = $("#email").val();
+                var phoneNum = $("#phoneNum").val();
+                token = localStorage.getItem("token");
+                $.post("http://localhost:8080/modifyUserMsg?token="+token,
+						{username:username,
+						 realname:realname,
+						 nickname:nickname,
+						 age:age,
+						 email:email,
+						 phoneNum:phoneNum
+						},
+						function (res) {
+                    if(res.code == "0000"){
+                        layer.alert("提示信息："+res.msg);
+					}else {
+                        layer.alert("提示信息："+res.msg);
+					}
+				});
+                return false;
+            });
+        });
+	</script>
+
+</html>
